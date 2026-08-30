@@ -12,7 +12,7 @@ public class TodoController {
     private final List<Todo> todos = new ArrayList<>();
 
     public TodoController() {
-        todos.add(new Todo(1L, "Study DevOps"));
+        todos.add(new Todo(1L, "Study DevOps and Jenkins"));
         todos.add(new Todo(2L, "Finish assignment"));
     }
 
