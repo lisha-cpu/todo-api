@@ -7,17 +7,25 @@ pipeline {
                 checkout scm
             }
         }
-
+        
+        stage('Test') {
+            steps {
+                // Runs JUnit tests on Windows using the batch wrapper
+                bat 'mvnw.cmd test'
+            }
+        }
+        
         stage('Build') {
             steps {
-                bat './mvnw clean package -DskipTests'
+                // Builds the executable JAR file
+                bat 'mvnw.cmd clean package -DskipTests'
             }
         }
     }
 
     post {
-        success {
-            archiveArtifacts artifacts: 'target/*.jar', fingerprint: true
+        always {
+            archiveArtifacts artifacts: 'target/*.jar', allowEmptyArchive: true
         }
     }
 }
