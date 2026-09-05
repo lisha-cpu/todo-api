@@ -1,0 +1,13 @@
+[Unit]
+Description=Todo API Spring Boot Application
+After=network.target
+
+[Service]
+User=root
+ExecStart=/usr/bin/java -jar /opt/todo-api/{{ app_jar }} --server.port={{ app_port }}
+SuccessExitStatus=143
+Restart=always
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target

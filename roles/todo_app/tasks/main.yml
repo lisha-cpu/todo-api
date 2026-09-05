@@ -1,0 +1,32 @@
+---
+- name: Install OpenJDK 17
+  apt:
+    name: openjdk-17-jre-headless
+    state: present
+    update_cache: yes
+
+- name: Create app directory
+  file:
+    path: /opt/todo-api
+    state: directory
+    mode: '0755'
+
+- name: Copy JAR file
+  copy:
+    src: "{{ playbook_dir }}/target/{{ app_jar }}"
+    dest: /opt/todo-api/{{ app_jar }}
+    mode: '0644'
+  notify: Restart todo-api
+
+- name: Create systemd service
+  template:
+    src: todo-api.service.j2
+    dest: /etc/systemd/system/todo-api.service
+  notify: Restart todo-api
+
+- name: Enable and start todo-api service
+  systemd:
+    name: todo-api
+    enabled: yes
+    state: started
+    daemon_reload: yes

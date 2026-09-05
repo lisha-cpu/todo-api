@@ -1,0 +1,10 @@
+---
+- name: Deploy Todo API
+  hosts: app_servers
+  become: yes
+  vars:
+    app_port: 8080
+    app_jar: todo-api-0.0.1-SNAPSHOT.jar
+
+  roles:
+    - todo_app
